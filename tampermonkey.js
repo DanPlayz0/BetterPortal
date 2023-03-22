@@ -74,11 +74,20 @@
             clickEvent.initEvent("click", true, true);
             document.querySelector(`[data-sort="date_due"]`).dispatchEvent(clickEvent);
 
+            if (localStorage.getItem("betterportal-hidden-assignments")){
+                var buttonsBar = document.getElementById("assignment-center-header-view").children[0].children[0].children[2].children[0].children[1].children[0];
+                buttonsBar.innerHTML = '<button id="betterportal-unhide-all" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-eye"></i> Unhide All</button>' + buttonsBar.innerHTML;
+            }
+
             events.push(['click', (e) => {
                 if(e.srcElement.className.includes("betterportal-hide-assignment")) {
                     hiddenAssignments.push({id:e.srcElement.parentElement.parentElement.children[5].children[0].children[0].children[0].dataset.id})
                     e.srcElement.parentElement.parentElement.remove();
                     window.localStorage.setItem("betterportal-hidden-assignments", JSON.stringify(hiddenAssignments))
+                } else if (e.srcElement.id == "betterportal-unhide-all"){
+                    hiddenAssignments = [];
+                    localStorage.removeItem("betterportal-hidden-assignments");
+                    window.location.reload();
                 }
             }]);
             const assignments = [...document.querySelector("tbody#assignment-center-assignment-items").children];
