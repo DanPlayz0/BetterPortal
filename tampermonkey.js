@@ -74,9 +74,16 @@
             clickEvent.initEvent("click", true, true);
             document.querySelector(`[data-sort="date_due"]`).dispatchEvent(clickEvent);
 
+            const assignmentHeaderViewAdd = (prepend = true, html) => {
+                if(!html) throw Error("No HTML Provided! (assignmentHeaderViewAdd)");
+                const assignmentHeaderView = document.querySelector("#assignment-center-header-view .pull-right.assignment-calendar-button-bar");
+                if (assignmentHeaderView) {
+                    if(prepend) assignmentHeaderView.innerHTML = html + assignmentHeaderView.innerHTML;
+                    else assignmentHeaderView.innerHTML += html;
+                }
+            };
             if (localStorage.getItem("betterportal-hidden-assignments")){
-                var buttonsBar = document.getElementById("assignment-center-header-view").children[0].children[0].children[2].children[0].children[1].children[0];
-                buttonsBar.innerHTML = '<button id="betterportal-unhide-all" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-eye"></i> Unhide All</button>' + buttonsBar.innerHTML;
+                assignmentHeaderViewAdd(true, `<button id="betterportal-unhide-all" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-eye"></i> Unhide All</button>`);
             }
 
             events.push(['click', (e) => {
@@ -84,14 +91,14 @@
                     hiddenAssignments.push({id:e.srcElement.parentElement.parentElement.children[5].children[0].children[0].children[0].dataset.id})
                     e.srcElement.parentElement.parentElement.remove();
                     window.localStorage.setItem("betterportal-hidden-assignments", JSON.stringify(hiddenAssignments))
-                    if (!document.getElementById("betterportal-unhide-all")){
-                        var buttonsBar = document.getElementById("assignment-center-header-view").children[0].children[0].children[2].children[0].children[1].children[0];
-                        buttonsBar.innerHTML = '<button id="betterportal-unhide-all" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-eye"></i> Unhide All</button>' + buttonsBar.innerHTML;
+                    if (!document.querySelector("#betterportal-unhide-all")){
+                        assignmentHeaderViewAdd(true, `<button id="betterportal-unhide-all" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-eye"></i> Unhide All</button>`);
                     }
                 } else if (e.srcElement.id == "betterportal-unhide-all"){
                     hiddenAssignments = [];
                     localStorage.removeItem("betterportal-hidden-assignments");
-                    window.location.reload();
+                    document.querySelector("#betterportal-unhide-all")?.remove();
+                    window.location.reload(); // Todo, Make this not reload the page.
                 }
             }]);
             const assignments = [...document.querySelector("tbody#assignment-center-assignment-items").children];
