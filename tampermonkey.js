@@ -84,6 +84,10 @@
                     hiddenAssignments.push({id:e.srcElement.parentElement.parentElement.children[5].children[0].children[0].children[0].dataset.id})
                     e.srcElement.parentElement.parentElement.remove();
                     window.localStorage.setItem("betterportal-hidden-assignments", JSON.stringify(hiddenAssignments))
+                    if (!document.getElementById("betterportal-unhide-all")){
+                        var buttonsBar = document.getElementById("assignment-center-header-view").children[0].children[0].children[2].children[0].children[1].children[0];
+                        buttonsBar.innerHTML = '<button id="betterportal-unhide-all" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-eye"></i> Unhide All</button>' + buttonsBar.innerHTML;
+                    }
                 } else if (e.srcElement.id == "betterportal-unhide-all"){
                     hiddenAssignments = [];
                     localStorage.removeItem("betterportal-hidden-assignments");
