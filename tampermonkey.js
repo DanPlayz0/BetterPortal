@@ -59,7 +59,7 @@
                         elm.children[5].children[0].children[0].children[0].classList.remove('label-danger');
                     }
                     if (!elm.children[6].innerHTML.includes("betterportal-hide-assignment")) {
-                        elm.children[6].innerHTML += `${elm.children[6].innerHTML.includes("hide-assignment")?'<br/>':''}<button data-id="${assignmentId}" class="btn btn-link betterportal-hide-assignment" style="padding-left:0px;">Hide</button>`;
+                        elm.children[6].innerHTML += `${elm.children[6].innerHTML.includes("hide-assignment")?'<br/>':''}<br/><button data-id="${assignmentId}" class="btn btn-link betterportal-hide-assignment" style="padding-left:0px;">Hide</button>`;
                     }
                     // Todo, Make "Graded" clickable
                     // Todo, Show if an assignment has a saved note.
