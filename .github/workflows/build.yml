@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Clone repo
+    - uses: actions/checkout@v2
+    
     - name: Install Build Dependencies
       run: npm install -g web-ext
     
