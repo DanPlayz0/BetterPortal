@@ -19,6 +19,13 @@
             });
         });
     }
+
+    // Speed up logins
+    var landingPage = "assignment-center";
+    if (window.location == "https://geffenacademy.myschoolapp.com/app#login"){
+        window.location.replace("https://signin.blackbaud.com/signin/?redirectUrl=https:%2F%2Fgeffenacademy.myschoolapp.com%2Fapp%3Fbb_id%3D1%23studentmyday/" + landingPage);
+    }
+
     let lastPagePath = null, lastPageHash = null;
     let pageUpdate = null, events = [];
     const portalContext = await fetch(`https://geffenacademy.myschoolapp.com/api/webapp/context?_=${Date.now()}`).then(res=>res.json());
